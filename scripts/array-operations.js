@@ -6,6 +6,10 @@ export default () => {
         container && (container.insertAdjacentHTML('beforeend', `<li>${result}</li>`))
     }
 
+    function areValidValue(...args) {
+        return args.every(value => typeof value === 'number' && value > 0);
+    }
+
     /* Point 1
     * (Удалить из массива [1,2,3,4,5,6,7,8,9] элементы с первого по третий, и вставить между третьим и четвертым, три двойки)
     */
@@ -37,6 +41,11 @@ export default () => {
     * заполненый случайными числами
     * */
     function generateRandomMatrix(x, y) {
+        if (!areValidValue(x, y)) {
+            console.error("Value must be greater than 0, and should be a number");
+            return;
+        }
+
         const array = [];
 
         new Array(x).fill(null).map(() => {
@@ -55,6 +64,11 @@ export default () => {
     * кроме значений по диагонали которые равны 1
     * */
     function generateIdentityMatrix(n) {
+        if (!areValidValue(n)) {
+            console.error("Value must be greater than 0, and should be a number");
+            return;
+        }
+
         const defaultNumber = 0;
         const placeholderNumber = 1;
         const resultArray = new Array(n).fill(null).map((_, index) => {
@@ -72,6 +86,11 @@ export default () => {
     * Функция принимает цифровое значение и выводит большую и меньшую цифру в этом числе
     * */
     function getMinMaxDigits(number) {
+        if (!areValidValue(number)) {
+            console.error("Value must be greater than 0, and should be a number");
+            return;
+        }
+
         const arrayWithNumbers = number.toString().split('').map(Number);
         const minValue = Math.min(...arrayWithNumbers);
         const maxValue = Math.max(...arrayWithNumbers);
@@ -84,6 +103,11 @@ export default () => {
     * Написать функцию которая примимает массив и число, и возвращает номер индекса ближайшего числа в массиве
     * */
     function getNumberIndex(arr, number) {
+        if (!Array.isArray(arr) || arr.length === 0 || number <= 0 || typeof number !== 'number') {
+            console.error("Error: Please check the values. 'arr' should be a non-empty array, and 'number' should be a positive number.");
+            return;
+        }
+
         const closestNumber = arr.reduce(function (prev, curr) {
             return (Math.abs(curr - number) < Math.abs(prev - number) ? curr : prev);
         });
@@ -97,6 +121,11 @@ export default () => {
     * Написать Функцию которая принимает число и возвращает true если цифры в числе повторяются и false если нет
     * */
     function hasRepeatedDigits(number) {
+        if (!areValidValue(number)) {
+            console.error("Value must be greater than 0, and should be a number");
+            return;
+        }
+
         const newArr = [];
         let isNumberRepeats = false;
 
@@ -122,6 +151,11 @@ export default () => {
    * Организовать удобный вывод на экран
    * */
     function generateAndProcessMatrix(startNum, finishNum) {
+        if (typeof startNum !== 'number' || typeof finishNum !== 'number' || startNum >= finishNum) {
+            console.error("Value should be a number, and startNum should be less than finishNum.");
+            return;
+        }
+
         // Magic numbers are used for testing
         const matrix = [];
 
@@ -162,6 +196,12 @@ export default () => {
         const haveMinutes = 90;
         const minutesPerQuarter = 10;
         const minutesPerWalk = directions.length * minutesPerQuarter;
+        const allowedDirections = ["west", "east", "north", "south"];
+
+        if (!Array.isArray(directions) || !directions.length || !directions.every(direction => allowedDirections.includes(direction))) {
+            console.error("Array contains an invalid direction. Each value should be 'west', 'east', 'north', or 'south'.");
+            return;
+        }
 
         directions.forEach((direction) => {
             switch (direction) {
